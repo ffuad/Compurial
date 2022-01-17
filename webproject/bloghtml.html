@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h3>Euclid’s Algorithm:</h3>
+<p>
+    Idea behind Euclid’s Algorithm is GCD(A, B) = GCD(B, A % B). The algorithm will recurse until A % B = 0.
+</p>
+<h3>Modulo:</h3>
+
+<p>
+    <code>
+        int GCD(int A, int B) { <br>
+            if(B==0) <br>
+                return A; <br>
+            else <br>
+                return GCD(B, A % B); <br>
+        } <br>
+    </code>
+    Let us take an example.
+<br>
+    <code>
+        Let A = 16, B = 10. <br>
+GCD(16, 10) = GCD(10, 16 % 10) = GCD(10, 6) <br>
+GCD(10, 6) = GCD(6, 10 % 6) = GCD(6, 4) <br>
+GCD(6, 4) = GCD(4, 6 % 4) = GCD(4, 2) <br>
+GCD(4, 2) = GCD(2, 4 % 2) = GCD(2, 0) <br>
+    </code>
+    Since B = 0 so GCD(2, 0) will return 2.
+    Time Complexity: The time complexity of Euclid’s Algorithm is <code>O(log(max(A, B)))</code> 
+</p>
+
+<h3>Extended Euclid Algorithm:</h3>
+
+<p>
+    This is the extended form of Euclid’s Algorithm explained above. GCD(A,B) has a special property that it can always be represented in the form of an equation, i.e., Ax + By = GCD(A, B). <br>
+
+    This algorithm gives us the coefficients (x and y) of this equation which will be later useful in finding the Modular Multiplicative Inverse. These coefficients can be zero or negative in their value. This algorithm takes two inputs as A and B and returns GCD(A, B) and coefficients of the above equations as output. <br>
+    <b>Implementation: </b>
+
+    <code>
+        #include &lt; iostream &gt; <br>
+        <br>
+        int d, x, y; <br>
+        void extendedEuclid(int A, int B) {
+        <br>if(B == 0) {
+                <br>d = A;
+                <br>x = 1;
+                <br>y = 0;
+        <br>}
+        <br>else {
+            <br>extendedEuclid(B, A%B);
+            <br>int temp = x;
+            <br>x = y;
+            <br>y = temp - (A/B)*y;
+            <br> }
+            <br>}
+            <br>
+        <br>int main( ) {
+            <br>extendedEuclid(16, 10);
+            <br>cout &lt;&lt; ”The GCD of 16 and 10 is ” &lt;&lt; d &lt; endl;
+            <br>cout &lt;&lt; ”Coefficient x and y are: ”&lt;&lt; x &lt;&lt;  “and  “ &lt;&lt; y &lt;&lt; endl;
+            <br>return 0;   
+        <br>}
+    </code> <br>
+    <b>Output:</b> <br>
+    <code>
+        The GCD of 16 and 10 is 2 <br>
+        Coefficient x and y are: 2 and -3 <br>
+    </code> <br>
+    Initially, Extended Euclid Algorithm will run as Euclid Algorithm until we get GCD(A, B) or until B gets 0 and then it will assign x = 1 and y = 0. As B = 0 and GCD(A, B) is A in the current condition, so equation Ax + By = GCD(A, B) will be changed to A * 1 + 0 * 0 = A.
+    <br>
+    So the values of d, x, y in the whole process of extendedEuclid( ) function are: <br>
+    <br> 
+    1) d=2, x = 1, y = 0. <br>
+    2) d=2, x = 0 , y = 1 - (4 /2) * 0 = 1. <br>
+    3) d=2, x = 1 , y = 0 - (6/4) * 1 = -1. <br>
+    4) d=2, x = -1 , y = 1 - (10/6) * -1 = 2. <br>
+    5) d=2 , x= 2, y = -1 - (16/10) * 2 = -3. <br>
+</p>
+
+</body>
+</html>
